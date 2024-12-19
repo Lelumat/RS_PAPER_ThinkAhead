@@ -22,3 +22,9 @@ dfBacktrack <- read.csv("dfBacktrack.csv")
 #FUll model
 backtrack_fullModel <- lmer(N_BACKTRACK ~ DepthID * Level + (1|SubjID), data = dfBacktrack)
 summary(backtrack_fullModel)
+
+#VIEW TIME
+dfView <- read.csv("dfViewTime.csv")
+#FUll model
+view_fullModel <- lmer(VIEW_TIME ~ DepthID * Level + (1|SubjID), data = dfView)
+summary(view_fullModel)

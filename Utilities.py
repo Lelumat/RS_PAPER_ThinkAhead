@@ -437,17 +437,15 @@ def all_simple_paths_graph(G, source, targets, cutoff, depth):
             if child in visited:
                 continue
             depth_equality = len(targets & (set(visited.keys()) | {child})) == depth
-            if depth_equality:#child in targets:
+            if depth_equality:
                 yield list(visited) + [child]
             visited[child] = None
-            depth_inequality = len(targets & set(visited.keys())) < depth+1
+            
             if len(targets - set(visited.keys())) > len(targets)-depth:  # expand stack until find all targets
                 stack.append(iter(G[child]))
             else:
                 visited.popitem()  # maybe other ways to child
-        else:  # len(visited) == cutoff:
-            #(targets & (set(children) | {child})) - set(visited.keys()) tartget vicini
-            #non visitati
+        else: 
             for target in (targets & (set(children) | {child})) - set(visited.keys()):
                     if len(targets & (set(visited.keys()) | {target}))==depth:
                         yield list(visited) + [target]

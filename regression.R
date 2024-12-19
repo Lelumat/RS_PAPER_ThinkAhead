@@ -85,3 +85,31 @@ cat("\n\n Is there a main effect of level?: \n\n")
 anova(backtrack_fullModel, backtrack_LevelInt, test = "LRT")
 cat("\n\n Summary of the full model: \n\n")
 summary(backtrack_fullModel)
+
+
+#VIEW TIME
+dfView <- read.csv("dfViewTime.csv")
+
+#FUll model
+view_fullModel <- lmer(VIEW_TIME ~ DepthID * Level + (1|SubjID), data = dfView)
+
+#Reduced models
+view_modelNoRandom <- lm(VIEW_TIME ~ DepthID + Level + DepthID : Level, data = dfView)
+view_modelNoIntercept <- lmer(VIEW_TIME ~ 0 + DepthID * Level + (1|SubjID), data = dfView)
+view_modelNoInteraction <- lmer(VIEW_TIME ~ DepthID + Level + (1|SubjID), data = dfView)
+view_DepthInt <- lmer(VIEW_TIME ~ Level + Level:DepthID + (1|SubjID), data = dfView)
+view_LevelInt <- lmer(VIEW_TIME ~ DepthID + Level:DepthID + (1|SubjID), data = dfView)
+
+
+cat("\n\n Is the random effect significant?: \n\n")
+anova(view_fullModel, view_modelNoRandom, test = "LRT")
+cat("\n\n Is the intercept significant?: \n\n")
+anova(view_fullModel, view_modelNoIntercept, test = "LRT")
+cat("\n\n Is the interaction significant?: \n\n")
+anova(view_fullModel, view_modelNoInteraction, test = "LRT")
+cat("\n\n Is there a main effect of depth?: \n\n")
+anova(view_fullModel, view_DepthInt, test = "LRT")
+cat("\n\n Is there a main effect of level?: \n\n")
+anova(view_fullModel, view_LevelInt, test = "LRT")
+cat("\n\n Summary of the full model: \n\n")
+summary(view_fullModel)
